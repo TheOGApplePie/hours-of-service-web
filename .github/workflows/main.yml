@@ -1,0 +1,30 @@
+on: 
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+    - name: Install dependencies
+      run: npm install
+    - name: Generate environment file
+      run: |
+        echo "export const environment = {
+          production: true,
+          firebase: {
+            apiKey: '${{ secrets.API_KEY }}',
+            authDomain: '${{ secrets.AUTH_DOMAIN }}',
+            projectId: '${{ secrets.PROJECT_ID }}',
+            storageBucket: '${{ secrets.STORAGE_BUCKET }}',
+            messagingSenderId: '${{ secrets.MESSAGING_SENDER_ID }}',
+            appId: '${{ secrets.APP_ID }}',
+          },
+        };" > src/environments/environment.prod.ts
+    - name: Build
+      run: npm run build
