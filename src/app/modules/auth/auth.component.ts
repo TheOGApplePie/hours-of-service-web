@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
   loginForm!: FormGroup;
   ngOnInit(): void {
     this.initForm();
@@ -29,7 +30,8 @@ export class AuthComponent implements OnInit {
     const password = this.loginForm.value.password;
 
     this.authService.signInWithEmail(email, password).then((user) => {
-      localStorage.setItem('user', user.user?.refreshToken!);
+      localStorage.setItem('user', JSON.stringify(user));
+      this.router.navigate(['/dashboard']);
     });
   }
 }

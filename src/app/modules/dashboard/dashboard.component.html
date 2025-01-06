@@ -1,0 +1,17 @@
+<div>
+  <label><h3>List of Hours of Service</h3></label>
+</div>
+
+<div class="container">
+  <div *ngFor="let day of days" class="card my-3">
+    <div class="card-header">
+      <span> {{ day | date : "dd-MM-yyyy" }}</span>
+    </div>
+
+    <div class="card-body">
+      <button class="btn" (click)="navigateTo(day)">
+        <span>Edit Day</span>
+      </button>
+    </div>
+  </div>
+</div>
