@@ -1,0 +1,13 @@
+.row{
+    background-color: var(--document-gray);
+}
+.profile {
+    display: flex;
+    justify-content: end;
+}
+.circle {
+    height: 30px;
+    width: 30px;
+    background-color: red;
+    border-radius: 50%;
+}

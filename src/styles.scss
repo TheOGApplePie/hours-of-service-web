@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+:root{
+    --main-yellow:#FFD800;
+    --service-blue:#0056B8;
+    --document-gray:#E6E6E6;
+    --fun-coral:#FF6F61;
+    --professional-navy:#2C3E50;
+    --bright-navy:#A7FFEB;
+}

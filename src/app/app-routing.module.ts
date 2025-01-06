@@ -11,14 +11,14 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./modules/dashboard/dashboard.module').then(
-        (m) => m.DashboardModule
+      import('./modules/logged-in/logged-in.module').then(
+        (m) => m.LoggedInModule
       ),
     canActivate: [LoginGuard],
   },
   {
     path: '**',
-    redirectTo: 'login',
+    redirectTo: '',
   },
 ];
 

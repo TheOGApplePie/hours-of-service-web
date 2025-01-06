@@ -1,0 +1,24 @@
+<div class="row p-3">
+  <div class="col">
+    <h4>header</h4>
+  </div>
+  <div class="col d-flex justify-content-end">
+    <div ngbDropdown class="">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+        <div class="profile">
+          <div class="circle"></div>
+          <span>Username</span>
+        </div>
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button ngbDropdownItem>My Profile</button>
+        <button ngbDropdownItem (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</div>
