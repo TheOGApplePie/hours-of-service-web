@@ -1,0 +1,13 @@
+<div [formGroup]="loginForm">
+  <div>
+    <label for="email"
+      >Email<input type="text" formControlName="email" id="email"
+    /></label>
+  </div>
+  <div>
+    <label for="password"
+      >Password<input type="password" formControlName="password" id="password"
+    /></label>
+  </div>
+  <button (click)="login()">Login</button>
+</div>
