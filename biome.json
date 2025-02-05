@@ -1,0 +1,12 @@
+{
+    "root": true,
+    "extends": [
+        "biome:recommended"
+    ],
+    "files": [
+        "src/**/*.ts",
+        "src/**/*.html",
+        "src/**/*.scss"
+    ],
+    "rules": {}
+}

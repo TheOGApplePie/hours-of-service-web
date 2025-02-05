@@ -15,7 +15,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'edit-day-report',
+        path: 'edit-day-report/:day',
         loadChildren: () =>
           import('../daily-view/daily-view.module').then(
             (m) => m.DailyViewModule

@@ -17,7 +17,6 @@ export class DashboardComponent implements OnInit {
     });
   }
   navigateTo(day: string) {
-    console.log(day);
-    this.router.navigate(['edit-day-report']);
+    this.router.navigate(['edit-day-report', day]);
   }
 }

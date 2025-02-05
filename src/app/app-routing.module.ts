@@ -14,7 +14,7 @@ const routes: Routes = [
       import('./modules/logged-in/logged-in.module').then(
         (m) => m.LoggedInModule
       ),
-    canActivate: [LoginGuard],
+    // canActivate: [LoginGuard], 
   },
   {
     path: '**',

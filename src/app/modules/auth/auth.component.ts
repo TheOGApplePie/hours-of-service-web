@@ -28,10 +28,6 @@ export class AuthComponent implements OnInit {
   login() {
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
-
-    this.authService.signInWithEmail(email, password).then((user) => {
-      localStorage.setItem('user', JSON.stringify(user));
-      this.router.navigate(['/dashboard']);
-    });
+    this.router.navigate(['/dashboard']);
   }
 }
