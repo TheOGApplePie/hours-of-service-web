@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -9,7 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router) {}
+  authService = inject(AuthService);
+  router = inject(Router);
   loginForm!: FormGroup;
   ngOnInit(): void {
     this.initForm();

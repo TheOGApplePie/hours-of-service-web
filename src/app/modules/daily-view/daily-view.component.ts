@@ -1,13 +1,14 @@
 import {
-  AfterViewInit,
+  type AfterViewInit,
   Component,
-  ElementRef,
-  OnInit,
+  type ElementRef,
+  inject,
+  type OnInit,
   ViewChild,
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import type { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { DateTime } from 'luxon';
 import { DailyViewService } from 'src/app/services/daily-view.service';
 
@@ -17,13 +18,12 @@ import { DailyViewService } from 'src/app/services/daily-view.service';
   styleUrls: ['./daily-view.component.scss'],
 })
 export class DailyViewComponent implements OnInit, AfterViewInit {
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private dailyViewService: DailyViewService
-  ) {}
+  activatedRoute = inject(ActivatedRoute);
+  dailyViewService = inject(DailyViewService);
+
   @ViewChild('dailyViewCanvas', { static: true })
   dailyViewCanvas!: ElementRef<HTMLCanvasElement>;
-  currentDay: string = '';
+  currentDay = '';
   dailyLog!: FormGroup;
   ctx!: CanvasRenderingContext2D;
   currentDayNgb: NgbDateStruct = {
@@ -37,7 +37,8 @@ export class DailyViewComponent implements OnInit, AfterViewInit {
     this.getDayFromUrl();
   }
   ngAfterViewInit(): void {
-    this.ctx = this.dailyViewCanvas.nativeElement.getContext('2d')!;
+    const context = this.dailyViewCanvas.nativeElement.getContext('2d');
+    if (context) this.ctx = context;
     this.dailyViewCanvas.nativeElement.setAttribute(
       'width',
       (window.innerWidth - 100).toString()
@@ -49,8 +50,8 @@ export class DailyViewComponent implements OnInit, AfterViewInit {
     // });
   }
   drawAxis() {
-    var x = (window.innerWidth - 100) / 24;
-    var y = 100;
+    const x = (window.innerWidth - 100) / 24;
+    const y = 100;
     this.ctx.fillStyle = 'black';
     for (let i = 0; i < 24; i++) {
       this.ctx.font = 'bold 16px sans-serif';
@@ -77,13 +78,16 @@ export class DailyViewComponent implements OnInit, AfterViewInit {
   getDayFromUrl() {
     this.activatedRoute.paramMap.pipe().subscribe({
       next: (value) => {
-        this.currentDay = value.get('day')!;
-        const temp = DateTime.fromISO(this.currentDay);
-        this.currentDayNgb = {
-          year: temp.year,
-          month: temp.month,
-          day: temp.day,
-        };
+        const day = value.get('day');
+        if (day) {
+          this.currentDay = day;
+          const temp = DateTime.fromISO(this.currentDay);
+          this.currentDayNgb = {
+            year: temp.year,
+            month: temp.month,
+            day: temp.day,
+          };
+        }
       },
     });
   }
@@ -151,14 +155,14 @@ export class DailyViewComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.events.controls.forEach((event) => {
+    for (const event of this.events.controls) {
       const time = event.get('time')?.value;
       const type = event.get('type')?.value;
       const calculatedX = time.hour * x + (time.minute / 60) * x;
       const calculatedY =
         type === 'off' ? 50 : type === 'on-driving' ? 150 : 250;
       this.drawDot(calculatedX, calculatedY);
-    });
+    }
   }
   drawLine(
     x1: number,
@@ -194,26 +198,26 @@ export class DailyViewComponent implements OnInit, AfterViewInit {
     this.events.push(event);
   }
   normalizeTime(dateTime: DateTime) {
+    let newDateTime = dateTime;
     if (dateTime.minute > 0 && dateTime.minute <= 7) {
-      dateTime = dateTime.set({ minute: 0 });
+      newDateTime = dateTime.set({ minute: 0 });
     } else if (dateTime.minute > 7 && dateTime.minute <= 22) {
-      dateTime = dateTime.set({ minute: 15 });
+      newDateTime = dateTime.set({ minute: 15 });
     } else if (dateTime.minute > 22 && dateTime.minute <= 37) {
-      dateTime = dateTime.set({ minute: 30 });
+      newDateTime = dateTime.set({ minute: 30 });
     } else if (dateTime.minute > 37 && dateTime.minute <= 52) {
-      dateTime = dateTime.set({ minute: 45 });
+      newDateTime = dateTime.set({ minute: 45 });
     } else {
-      dateTime = dateTime.plus({ hours: 1 }).set({ minute: 0 });
+      newDateTime = dateTime.plus({ hours: 1 }).set({ minute: 0 });
     }
 
-    return dateTime;
+    return newDateTime;
   }
   isDisabled(index: number, type: string) {
     if (index === 0) {
       return type === 'off';
-    } else {
-      return type === this.events.at(index - 1).get('type')?.value;
     }
+    return type === this.events.at(index - 1).get('type')?.value;
   }
   saveCurrentDay() {}
 }

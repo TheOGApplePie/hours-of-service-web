@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -8,7 +8,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private router: Router, private authService: AuthService) {}
+router = inject(Router)
+  authService = inject(AuthService)
 
   ngOnInit(): void {}
   logout() {

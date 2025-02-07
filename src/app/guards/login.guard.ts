@@ -1,18 +1,18 @@
 import { inject, Injectable } from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
-  CanActivate,
+  type ActivatedRouteSnapshot,
+  type CanActivate,
   Router,
-  RouterStateSnapshot,
-  UrlTree,
+  type RouterStateSnapshot,
+  type UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginGuard implements CanActivate {
-  constructor(private router: Router) {}
+  router = inject(Router);
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -25,8 +25,7 @@ export class LoginGuard implements CanActivate {
     if (!user) {
       this.router.navigate(['/login']);
       return false;
-    } else {
-      return true;
     }
+    return true;
   }
 }

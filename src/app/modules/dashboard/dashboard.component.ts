@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DateTime } from 'luxon';
 
@@ -8,7 +8,7 @@ import { DateTime } from 'luxon';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  constructor(private router: Router) {}
+  router = inject(Router);
   thisWeek = DateTime.now().startOf('week');
   days = new Array(7).fill('');
   ngOnInit(): void {
