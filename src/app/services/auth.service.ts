@@ -1,25 +1,25 @@
-import { inject, Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { inject, Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: "root",
 })
 export class AuthService {
-  router = inject(Router);
+	router = inject(Router);
 
-  // Sign in with Email
-  signInWithEmail(email: string, password: string) {
-    return;
-  }
+	// Sign in with Email
+	signInWithEmail(email: string, password: string) {
+		return;
+	}
 
-  // Sign out
-  signOut() {
-    localStorage.clear();
-    this.router.navigate(['/login']);
-  }
+	// Sign out
+	signOut() {
+		localStorage.clear();
+		this.router.navigate(["/login"]);
+	}
 
-  // Get current user
-  getCurrentUser() {
-    return;
-  }
+	// Get current user
+	getCurrentUser() {
+		return;
+	}
 }
