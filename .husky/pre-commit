@@ -1,1 +1,2 @@
+npm run biome-format --write
 npm run biome-lint
