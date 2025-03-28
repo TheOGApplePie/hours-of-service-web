@@ -3,7 +3,7 @@ name: Run Backend Tests on grantech-be-dev
 on:
   pull_request:
     branches:
-      - azure-dev
+      - main
   workflow_dispatch:
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: "20.x"
 
       - name: Install dependencies
         run: npm install
