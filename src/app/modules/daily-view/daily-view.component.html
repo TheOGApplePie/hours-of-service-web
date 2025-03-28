@@ -1,1 +1,78 @@
-<p>daily-view works!</p>
+<section>
+  <div class="header px-0">
+    <div class="col text-start">
+      <h2>Daily Log for {{ currentDay | date : "dd/MM/yyyy" }}</h2>
+    </div>
+    <div class="col text-end">
+      <button class="btn btn-primary" (click)="saveCurrentDay()">Save</button>
+    </div>
+  </div>
+</section>
+<section>
+  <canvas class="daily-view-canvas" #dailyViewCanvas></canvas>
+</section>
+<form [formGroup]="dailyLog">
+  <div class="row" formArrayName="events">
+    <div
+      class="col-6"
+      *ngFor="let event of events.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <div class="row mt-3">
+        <div class="col-10">
+          <select
+            class="form-select"
+            formControlName="type"
+            aria-label="Default select example"
+          >
+            <option [disabled]="isDisabled(i, 'off')" value="off">
+              Off Duty
+            </option>
+            <option [disabled]="isDisabled(i, 'on-driving')" value="on-driving">
+              On Duty Driving
+            </option>
+            <option
+              [disabled]="isDisabled(i, 'on-not-driving')"
+              value="on-not-driving"
+            >
+              On Duty Not Driving
+            </option>
+          </select>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="yyyy-mm-dd"
+              name="dp"
+              formControlName="date"
+              [minDate]="currentDayNgb"
+              [maxDate]="currentDayNgb"
+              ngbDatepicker
+              #d="ngbDatepicker"
+            />
+            <button
+              class="btn btn-outline-secondary bi bi-calendar3"
+              (click)="d.toggle()"
+              type="button"
+            ></button>
+            <ngb-timepicker
+              [minuteStep]="15"
+              [spinners]="false"
+              [meridian]="true"
+              formControlName="time"
+            ></ngb-timepicker>
+          </div>
+        </div>
+        <div class="col-1">
+          <button class="h-100 btn btn-outline-danger">
+            <span class="material-icons"> delete </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-2">
+    <button type="button" class="btn btn-primary" (click)="addEvent()">
+      Add more
+    </button>
+  </div>
+</form>

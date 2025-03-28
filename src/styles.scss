@@ -2,6 +2,9 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+@import 'material-icons/iconfont/material-icons.scss';
+@import './theme/shared.scss';
 :root{
     --main-yellow:#FFD800;
     --service-blue:#0056B8;

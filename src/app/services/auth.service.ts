@@ -1,33 +1,25 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
+import { inject, Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: "root",
 })
 export class AuthService {
-  constructor(private afAuth: AngularFireAuth, private router: Router) {}
+	router = inject(Router);
 
-  // Sign in with Email
-  signInWithEmail(email: string, password: string) {
-    return this.afAuth.signInWithEmailAndPassword(email, password);
-  }
+	// Sign in with Email
+	signInWithEmail(email: string, password: string) {
+		return;
+	}
 
-  // Sign out
-  signOut() {
-    this.afAuth
-      .signOut()
-      .then(() => {
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      })
-      .catch((reason) => {
-        alert(reason);
-      });
-  }
+	// Sign out
+	signOut() {
+		localStorage.clear();
+		this.router.navigate(["/login"]);
+	}
 
-  // Get current user
-  getCurrentUser() {
-    return this.afAuth.authState;
-  }
+	// Get current user
+	getCurrentUser() {
+		return;
+	}
 }
